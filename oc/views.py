@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import db
 from .forms import PostForm
+import os
 
 # Create your views here.
 def post_new(request):
@@ -9,6 +10,10 @@ def post_new(request):
 		if form.is_valid():
 			post = form.save(commit=False)
 			post.out = "sample output"
+			open('./oc/code.py', 'w').write(post.code)
+			open('./oc/in', 'w').write(post.inp)
+			os.system("python ./oc/code.py < ./oc/in > ./oc/out")
+			post.out = open('./oc/out', 'r').read()
 			post.save()
 			return render(request, 'oc/post_detail.html', {'post':post})
 	else:
