@@ -1,0 +1,13 @@
+{% extends 'oc/base.html' %}
+
+{% block content %}
+	<div>
+	{{ post.code|safe }}
+	</div>
+	<div>
+	{{ post.inp|safe }}
+	</div>
+	<div>
+	{{ post.out|safe }}
+	</div>
+{% endblock %}

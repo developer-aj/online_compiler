@@ -1,8 +1,6 @@
 from django.db import models
-from django.utils import timezone
 
-# Create your models here.
-class Portal(models.Model):
-	user = models.ForeignKey('auth.User')
+class db(models.Model):
 	code = models.TextField()
-	compiled_at = models.DateTimeField(default=timezone.now)
+	inp = models.TextField(default="")
+	out = models.TextField(default="")
