@@ -15,4 +15,5 @@ class db(models.Model):
 	
 	language = models.CharField(choices=LANGUAGES)
 
-	def __str__():
+	def __str__(self):
+		return self.language
