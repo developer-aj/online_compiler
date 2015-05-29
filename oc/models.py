@@ -14,3 +14,5 @@ class db(models.Model):
 	out = models.TextField(default="")
 	
 	language = models.CharField(choices=LANGUAGES)
+
+	def __str__():
