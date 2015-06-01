@@ -1,9 +1,12 @@
 myvenv
 *.pyc
 *.*~
+*~
 staticfiles
 local_settings.py
 db.sqlite3
+a.out
 in
 out
-code.py
+code.*
+

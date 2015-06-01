@@ -13,7 +13,7 @@ class db(models.Model):
 	inp = models.TextField(default="")
 	out = models.TextField(default="")
 	
-	language = models.CharField(choices=LANGUAGES)
+	language = models.CharField(max_length=50, choices=LANGUAGES)
 
 	def __str__(self):
 		return self.language
