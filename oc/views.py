@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import db
 from .forms import PostForm
 import os
+import subprocess
 
 # Create your views here.
 def post_new(request):
@@ -23,30 +24,33 @@ def post_detail(request, pk):
 	return render(request, 'oc/post_detail.html', {'post':post})
 
 def compiler(lang, code, inp):
-	proc = ""
-	exec_command = " < ./env/in &> ./env/out"
+	proc = []
+	exec_command = "< ./env/in &> ./env/out"
 	time = 0
 	kill_command = " kill $! &> ./env/out"
 	open('./env/in', 'w+').write(inp)
 	if lang=='C':
 		open('./env/code.c', 'w+').write(code)
-		os.system("gcc ./env/code.c -o a.out &> ./env/out")
+		os.system("gcc ./env/code.c &> ./env/out")
 		time = '5'
-		proc = "./env/a.out"
+		proc = ["./env/a.out"]
 
 	elif lang=='C++':
 		open('./env/code.cpp', 'w+').write(code)
-		os.system("gcc ./env/code.cpp -o a.out &> ./env/out")
+		os.system("gcc ./env/code.cpp &> ./env/out")
 		time = '5'
-		proc = "./env/a.out"
+		proc = ["./env/a.out"]
 		
 	elif lang=='Python':
 		open('./env/code.py', 'w+').write(code)
 		time = '10'
-		proc = "python ./env/code.py"
+		proc = ["python", "./env/code.py"]
 
 	else :
 		open('./env/out', 'w+').write('under development')
 		return
-	os.system(proc + exec_command + " & sleep " + time + kill_command)
+	#os.system(proc + exec_command + " & sleep " + time + kill_command)
+	inpfile = open('./env/in')
+	result = subprocess.check_output(proc, stdin=inpfile, stderr=subprocess.STDOUT)
+	open('./env/out', 'w+').write(result)
 		
